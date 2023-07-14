@@ -201,18 +201,15 @@ export default class PenguinLogin extends BaseScene {
         let username = this.penguin.username
         let password = this.passwordInput.text
         let token = this.network.getToken(username)
-        let onConnect
 
         this.interface.showLoading(`Logging in ${username}`)
         this.scene.stop()
 
-        if (token && !this.passwordEdited) {
-            onConnect = () => this.network.send('token_login', { username: username, token: token })
-        } else {
-            onConnect = () => this.network.send('login', { username: username, password: password })
-        }
+        const auth = token && !this.passwordEdited
+            ? { username, password: token, method: 'token' }
+            : { username, password, method: 'password' };
 
-        this.network.connectLogin(this.checks.username.checked, this.checks.password.checked, onConnect)
+        this.network.connectLogin(this.checks.username.checked, this.checks.password.checked, auth, () => { })
     }
 
     onForgetClick() {
