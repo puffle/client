@@ -209,7 +209,7 @@ export default class PenguinLogin extends BaseScene {
             ? { username, password: token, method: 'token' }
             : { username, password, method: 'password' };
 
-        this.network.connectLogin(this.checks.username.checked, this.checks.password.checked, auth, () => { })
+        this.network.connectLogin(this.checks.username.checked, this.checks.password.checked, auth)
     }
 
     onForgetClick() {

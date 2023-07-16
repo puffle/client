@@ -2,6 +2,8 @@ import DataHandler from './DataHandler'
 
 import io from 'socket.io-client'
 
+import axios from 'axios'
+
 
 export default class Network {
 
@@ -23,15 +25,13 @@ export default class Network {
         this.worldName
     }
 
-    connectLogin(saveUsername, savePassword, auth, onConnect) {
+    connectLogin(saveUsername, savePassword, auth) {
         this.saveUsername = saveUsername
         this.savePassword = savePassword
 
-        this.connect('Login', auth, () => {
-            onConnect()
-        }, () => {
-            this.disconnect()
-        })
+        // TODO: add error handling for ajv invalid schema
+        axios.post('/login', auth)
+            .then((response) => this.onMessage({ action: 'login', args: response.data}))
     }
 
     connectGame(world, username, key) {
