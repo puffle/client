@@ -7,6 +7,11 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
+	
+	"initializeCommand": "docker network create puffle_dev || true",
+
+	// https://github.com/microsoft/vscode-remote-release/issues/4272#issuecomment-772665186
+	"runArgs": [ "--network", "puffle_dev" ],
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
