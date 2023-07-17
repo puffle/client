@@ -37,9 +37,10 @@ let config = {
             writeToDisk: true
         },
         proxy: {
-            '/login': {
+            '/world/login': {
                 target: 'http://localhost:6111',
-                pathRewrite: { '^/login': '/api/login' },
+                pathRewrite: { '^/world/login': '' },
+                ws: true
             },
 
             '/world/blizzard': {
@@ -84,25 +85,27 @@ let config = {
     ]
 }
 
-const configDev = Object.assign({}, config)
-configDev.devServer.host = '0.0.0.0'
-configDev.devServer.proxy = {
-    '/login': {
-        target: 'http://puffle_devserver:6111',
-        pathRewrite: { '^/login': '/api/login' },
-    },
-
-    '/world/blizzard': {
-        target: 'http://puffle_devserver:6112',
-        pathRewrite: { '^/world/blizzard': '' },
-        ws: true
-    },
-
-    '/create/scripts/php': 'http://localhost:80'
-}
-
 module.exports = (env, argv) => {
-    if (env.devContainer === true) return configDev
+    if (env.devContainer === true) {
+        config.devServer.host = '0.0.0.0'
+        config.devServer.proxy = {
+            '/login': {
+                target: 'http://puffle_devserver:6111',
+                pathRewrite: { '^/login': '/api/login' },
+            },
+        
+            '/world/blizzard': {
+                target: 'http://puffle_devserver:6112',
+                pathRewrite: { '^/world/blizzard': '' },
+                ws: true
+            },
+        
+            '/create/scripts/php': 'http://localhost:80'
+        }
+
+        return config
+    }
+
     if (argv.mode !== 'production') {
         return config
     }
