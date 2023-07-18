@@ -85,7 +85,7 @@ export default class ClientController {
     }
 
     get isModerator() {
-        return this.rank > 1
+        return this.rank > 0
     }
 
     initInventory() {
