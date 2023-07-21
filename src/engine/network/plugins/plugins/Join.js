@@ -10,7 +10,6 @@ export default class Join extends Plugin {
             'load_player': this.loadPlayer,
             'join_room': this.joinRoom,
             'join_igloo': this.joinIgloo,
-            'join_game_room': this.joinGameRoom,
             'add_player': this.addPlayer,
             'remove_player': this.removePlayer
         }
@@ -28,17 +27,16 @@ export default class Join extends Plugin {
     }
 
     joinRoom(args) {
-        this.interface.showLoading(this.getString('loading', this.crumbs.scenes.rooms[args.room].key), true)
+        if (args.game !== undefined) {
+            this.interface.showLoading(this.getString('loading', this.crumbs.games[args.game].key))
+        } else {
+            this.interface.showLoading(this.getString('loading', this.crumbs.scenes.rooms[args.room].key), true)
+        }
         this.world.joinRoom(args)
     }
 
     joinIgloo(args) {
         this.interface.showLoading(this.getString('loading', 'igloo'), true)
-        this.world.joinRoom(args)
-    }
-
-    joinGameRoom(args) {
-        this.interface.showLoading(this.getString('loading', this.crumbs.games[args.game].key))
         this.world.joinRoom(args)
     }
 
