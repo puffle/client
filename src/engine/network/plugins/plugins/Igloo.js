@@ -64,9 +64,11 @@ export default class Igloo extends Plugin {
         if (!this.world.room.isIgloo) return
 
         this.world.room.updateFlooring(args.flooring)
-        this.client.coins = args.coins
 
-        this.interface.refreshPlayerCard()
+        if (args.coins !== undefined) {
+            this.client.coins = args.coins
+            this.interface.refreshPlayerCard()
+        }
     }
 
     updateMusic(args) {
