@@ -61,6 +61,8 @@ export default class RuffleController extends BaseScene {
             logLevel: (localStorage.logging == 'true')
                 ? 'trace'
                 : 'error'
+        }).then(() => {
+            this.player.volume = this.soundManager.muteMusic ? 0 : 1;
         })
     }
 
@@ -129,6 +131,8 @@ export default class RuffleController extends BaseScene {
     }
 
     startGameMusic() {
+        if (this.soundManager.muteMusic) return
+
         let music = this.music
 
         if (!music) {
