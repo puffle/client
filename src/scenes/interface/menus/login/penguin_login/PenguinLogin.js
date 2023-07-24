@@ -207,7 +207,7 @@ export default class PenguinLogin extends BaseScene {
 
         const auth = token && !this.passwordEdited
             ? { username, password: token, method: 'token' }
-            : { username, password, method: 'password' };
+            : { username, password, method: 'password', createToken: this.checks.password.checked }
 
         this.network.connectLogin(this.checks.username.checked, this.checks.password.checked, auth)
     }

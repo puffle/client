@@ -29,23 +29,16 @@ export default class Network {
         this.saveUsername = saveUsername
         this.savePassword = savePassword
 
+        // Only create token if save password is checked and space is available
+        auth.createToken = auth.createToken && this.savePassword && auth.method === 'password' && Object.keys(this.savedPenguins).length <= 6
+
         // TODO: add error handling for ajv invalid schema
         axios.post('/login', auth)
             .then((response) => this.onMessage({ action: 'login', args: response.data}))
     }
 
     connectGame(world, username, key) {
-        // Only create token if save password is checked and space is available
-        let createToken = this.savePassword && Object.keys(this.savedPenguins).length <= 6
-        let response = { username: username, key: key, createToken: createToken }
-
-        // If a token exists for the user add the token selector to response,
-        // so that the token can be deleted/refreshed by the server
-        let token = this.getToken(username)
-
-        if (token) {
-            response.token = token.split(':')[0]
-        }
+        let response = { username: username, key: key }
 
         this.connect(world, response, () => {
             this.worldName = world

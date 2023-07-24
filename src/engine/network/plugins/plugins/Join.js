@@ -16,6 +16,8 @@ export default class Join extends Plugin {
     }
 
     loadPlayer(args) {
+        // If we save the token only after entering a world, there is a possibility that the user will never enter the world
+        // and a token will remain saved in the database, unused
         if (this.network.saveUsername) {
             this.savePlayer(args)
         } else {

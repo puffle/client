@@ -18,6 +18,10 @@ export default class Login extends Plugin {
     login(args) {
         this.interface.hideLoading()
 
+        if (args.token) {
+            this.network.token = args.token
+        }
+
         if (args.success) {
             return this.scene.start('Servers', args)
         }
@@ -43,10 +47,6 @@ export default class Login extends Plugin {
     }
 
     gameAuth(args) {
-        if (args.token) {
-            this.network.token = args.token
-        }
-
         if (args.success) {
             this.network.send('join_server')
         }

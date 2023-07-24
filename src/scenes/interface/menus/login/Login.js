@@ -201,7 +201,7 @@ export default class Login extends BaseScene {
         this.interface.showLoading(`Logging in ${username}`)
         this.scene.stop()
 
-        this.network.connectLogin(this.checks.username.checked, this.checks.password.checked, { username, password, method: 'password' })
+        this.network.connectLogin(this.checks.username.checked, this.checks.password.checked, { username, password, method: 'password', createToken: this.checks.password.checked })
     }
 
     onCreateClick() {
