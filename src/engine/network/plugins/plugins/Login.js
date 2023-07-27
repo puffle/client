@@ -6,8 +6,7 @@ export default class Login extends Plugin {
     constructor(network) {
         super(network)
         this.events = {
-            'login': this.login,
-            'game_auth': this.gameAuth
+            'login': this.login
         }
     }
 
@@ -44,12 +43,6 @@ export default class Login extends Plugin {
 
             this.interface.prompt.error.visible = false
         })
-    }
-
-    gameAuth(args) {
-        if (args.success) {
-            this.network.send('join_server')
-        }
     }
 
 }
