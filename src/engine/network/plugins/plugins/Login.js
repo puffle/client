@@ -17,8 +17,14 @@ export default class Login extends Plugin {
     login(args) {
         this.interface.hideLoading()
 
-        if (args.token) {
-            this.network.token = args.token
+        if (args.penguin !== undefined && args.penguin.token !== undefined) {
+            this.network.token = args.penguin.token
+        }
+
+        if (this.network.saveUsername) {
+            this.savePlayer(args)
+        } else {
+            this.unsavePlayer(args)
         }
 
         if (args.success) {
@@ -43,6 +49,28 @@ export default class Login extends Plugin {
 
             this.interface.prompt.error.visible = false
         })
+    }
+
+    // Saves a player to local storage
+    savePlayer(args) {
+        let savedPenguins = this.network.savedPenguins
+
+        if (Object.keys(savedPenguins).length > 6 && !(args.username in savedPenguins)) return
+
+        args.penguin.username = args.username
+
+        savedPenguins[args.username.toLowerCase()] = args.penguin
+        localStorage.setItem('saved_penguins', JSON.stringify(savedPenguins))
+    }
+
+    // Deletes a player from local storage
+    unsavePlayer(args) {
+        let savedPenguins = this.network.savedPenguins
+
+        if (args.username.toLowerCase() in savedPenguins) {
+            delete savedPenguins[args.username.toLowerCase()]
+            localStorage.setItem('saved_penguins', JSON.stringify(savedPenguins))
+        }
     }
 
 }
