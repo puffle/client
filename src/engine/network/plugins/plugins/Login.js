@@ -66,6 +66,7 @@ export default class Login extends Plugin {
 
     // Deletes a player from local storage
     unsavePlayer(args) {
+        if (!args.success) return
         let savedPenguins = this.network.savedPenguins
 
         if (args.username.toLowerCase() in savedPenguins) {
