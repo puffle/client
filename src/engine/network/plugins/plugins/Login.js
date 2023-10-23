@@ -53,7 +53,7 @@ export default class Login extends Plugin {
 
     // Saves a player to local storage
     savePlayer(args) {
-        if (!args.success) return
+        if (!args.success || !args.penguin.token) return
         let savedPenguins = this.network.savedPenguins
 
         if (Object.keys(savedPenguins).length > 6 && !(args.username in savedPenguins)) return
