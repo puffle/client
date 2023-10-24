@@ -34,7 +34,14 @@ export default class Network {
 
         // TODO: add error handling for ajv invalid schema
         axios.post('/login', auth)
-            .then((response) => this.onMessage({ action: 'login', args: response.data}))
+            .then((response) => this.onMessage({ action: 'login', args: response.data }))
+            .catch((err) => {
+                if (err instanceof axios.AxiosError && err.response.data.message !== undefined) {
+                    return this.onMessage({ action: 'login', args: err.response.data })
+                }
+
+                throw err;
+            });
     }
 
     connectGame(world, username, key) {
