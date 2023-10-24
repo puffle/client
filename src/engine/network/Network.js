@@ -40,7 +40,8 @@ export default class Network {
                     return this.onMessage({ action: 'login', args: err.response.data })
                 }
 
-                throw err;
+                console.log(err)
+                this.onConnectionLost()
             });
     }
 
