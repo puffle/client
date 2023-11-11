@@ -2,12 +2,12 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/alpine
 {
 	"name": "Puffle Client",
-	
+
 	// More info: https://containers.dev/guide/dockerfile
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-	
+
 	"initializeCommand": "docker network create puffle_dev || true",
 
 	// https://github.com/microsoft/vscode-remote-release/issues/4272#issuecomment-772665186
