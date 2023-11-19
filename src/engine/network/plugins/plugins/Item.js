@@ -16,11 +16,23 @@ export default class Item extends Plugin {
     }
 
     updatePlayer(args) {
-        if (!this.world.room.isReady) {
-            return this.world.room.updateWaiting(args.id, { [args.slot]: args.item })
-        }
+        if (args.id === undefined) return
 
-        this.world.room.penguins[args.id].update(args.item, args.slot)
+        if (args.item !== undefined) {
+            // Clothes
+            if (!this.world.room.isReady) {
+                return this.world.room.updateWaiting(args.id, { [args.slot]: args.item })
+            }
+
+            this.world.room.penguins[args.id].update(args.item, args.slot)
+        } else if (args.attributes !== undefined) {
+            // Attributes
+            if (!this.world.room.isReady) {
+                return this.world.room.updateWaiting(args.id, args.attributes)
+            }
+
+            this.world.room.penguins[args.id].updateObject(args.attributes)
+        }
     }
 
     addItem(args) {

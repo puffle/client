@@ -50,7 +50,7 @@ export default class PathEngine {
         let distance = Phaser.Math.Distance.BetweenPoints(pos, safe)
 
         if (distance > 10) {
-            let duration = this.getDuration(distance, this.speed)
+            let duration = this.getDuration(distance, penguin.speed || this.speed)
             let angle = this.getAngle(pos, safe)
 
             penguin.direction = this.getDirection(angle)

@@ -43,6 +43,9 @@ export default class Penguin extends BaseContainer {
         // Function that is called after move completes, used to set a frame after move etc
         this.afterMove
 
+        this.scale = user.scale || 1
+        this.alpha = user.alpha ?? 1
+
         this.load()
     }
 
@@ -125,6 +128,8 @@ export default class Penguin extends BaseContainer {
             this.paperDollLoader.start()
         }
     }
+
+    updateObject(attributes) { Object.assign(this, attributes) }
 
     move(x, y) {
         let path = PathEngine.getPath(this, { x: x, y: y })
